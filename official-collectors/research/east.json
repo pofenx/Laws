@@ -1,0 +1,101 @@
+{
+  "meta": {
+    "task": "华东+华中省级官方法规库入口调研（可核实候选清单）",
+    "generated_at": "2026-09-29T00:00:00+08:00",
+    "method": "逐地区省级人大/政府公开库；curl+python 实际 HTTP 验证入口与原文详情；不用第三方转载，不绕过验证码。",
+    "region_count": 10,
+    "note": "access_status=verified 表示入口与至少一条原文详情均经 HTTP 实测（200 且正文可提取）；partial 表示入口可访问但详情为 JS/单页应用或库未对社会公开，需进一步处理。detail_url 为该库可定位原文的入口/代表条目。"
+  },
+  "regions": [
+    {
+      "region": "上海",
+      "list_url": "https://www.shrd.gov.cn/shrd/fggb/fggb.html",
+      "detail_url": "https://www.shrd.gov.cn/shrd/gk/content/27acd3c3-49b0-4213-a37a-19351efb8236.html",
+      "publisher": "上海市人大常委会（官网 www.shrd.gov.cn）",
+      "access_status": "verified",
+      "notes": "shrd.gov.cn『法规公布』栏目列出地方性法规公告/修改决定；实测该修改12件地方性法规决定详情页正文约1.2万字符。另有独立数据库入口 https://fgk.shrd.gov.cn/web/index（上海市法规规章规范性文件数据库，JS 单页应用，2024年1月上线，含地方性法规/规章/规范性文件）。注意：旧报道中的 spcsc.sh.cn 域名已失效（现指向无关站点），正确域名为 shrd.gov.cn。"
+    },
+    {
+      "region": "江苏",
+      "list_url": "https://www.jsrd.gov.cn/qwfb/sjfg/index.shtml",
+      "detail_url": "https://www.jsrd.gov.cn/qwfb/sjfg/202608/t20260811_1350846.shtml",
+      "publisher": "江苏省人大常委会（江苏人大网 www.jsrd.gov.cn）",
+      "access_status": "verified",
+      "notes": "『省级法规』栏目按篇列出地方性法规（长江船舶污染防治条例、湿地保护条例等）；实测长江船舶污染防治条例详情页正文约1.4万字符，可全文提取。省级法规规章规范性文件数据库已于2023年12月开通（收录8860+件）。"
+    },
+    {
+      "region": "浙江",
+      "list_url": "https://zcfg.zjrd.gov.cn/",
+      "detail_url": "https://zcfg.zjrd.gov.cn/",
+      "publisher": "浙江省人大常委会（主办）/法工委（承办）",
+      "access_status": "partial",
+      "notes": "『浙江省法规规章规范性文件库』官方库，入口实测 HTTP 200，标题正确，分地方性法规/政府规章/行政规范性文件/监委/法院/检察院等类别，并链接国家法律法规数据库、国务院政策文件库。但前端为 JS 单页应用，列表与详情经 XHR 动态加载，纯 HTTP 抓取无法直接取得详情正文，需按其前端接口或渲染处理。"
+    },
+    {
+      "region": "安徽",
+      "list_url": "http://www.ahrd.gov.cn/",
+      "detail_url": "https://www.ah.gov.cn/public/column/1681?siteId=6781961&type=3&action=list&activeId=444",
+      "publisher": "安徽省人大常委会（安徽人大网 ahrd.gov.cn）/安徽省人民政府（ah.gov.cn）",
+      "access_status": "partial",
+      "notes": "『安徽省法规规章规范性文件数据库』据官方报道2023年11月试运行（收录13547份，地方性法规542部），明确『数据库稳定运行后将适时向社会公众开放』，目前未见独立公开检索入口。安徽人大网 ahrd.gov.cn 为 JS 单页应用（无静态法规链接），安徽省政府 ah.gov.cn 法规规章栏目为动态渲染（静态 HTML 无条目）。需进一步确认对社会公开的具体检索地址。"
+    },
+    {
+      "region": "福建",
+      "list_url": "http://szrd.fjrd.gov.cn/zyfb/fg/",
+      "detail_url": "http://szrd.fjrd.gov.cn/zyfb/fg/202607/P020260730609332417031.pdf",
+      "publisher": "福建省人大常委会（福建省人大常委会门户网站 szrd.fjrd.gov.cn）",
+      "access_status": "verified",
+      "notes": "福建省人大『法规』重要发布栏目，以 PDF 形式提供法规全文。实测《福建省拥军优属条例》PDF 入口 HTTP 200、Content-Type application/pdf、文件头 %PDF-1.7（380KB），可下载解析。另有福建省人民政府网 https://www.fujian.gov.cn/zwgk/flfg/dfxfg/ 亦列地方性法规。"
+    },
+    {
+      "region": "江西",
+      "list_url": "https://jxrd.jxnews.com.cn/zyfb/index.shtml",
+      "detail_url": "https://jxrd.jxnews.com.cn/system/2026-05-27/031143744.shtml",
+      "publisher": "江西省人大常委会（江西省人大新闻网 jxrd.jxnews.com.cn）",
+      "access_status": "partial",
+      "notes": "江西人大网主体为 jxrd.jxnews.com.cn（省人大主办）。『重要发布』栏目(HTTP 200)列人大常委会公告（第107-111号）等；公告/法规全文以 system/.../xxxx.shtml 形式发布，但实测部分公告详情页经 302 跳转至 404 页，详情可用性不稳定。需进一步核对稳定的法规全文栏目与可用详情链接。"
+    },
+    {
+      "region": "山东",
+      "list_url": "https://fggzk.sdrd.gov.cn/",
+      "detail_url": "https://fggzk.sdrd.gov.cn/",
+      "publisher": "山东省人大常委会（山东人大门户网站 www.sdrd.gov.cn）",
+      "access_status": "partial",
+      "notes": "『山东省法规规章规范性文件数据库』独立库，入口实测 HTTP 200、标题正确，为 JS 单页应用（前端 app.js 后端指向 pkulaw 法制网 cmutils 服务），列表/详情经动态加载，纯 HTTP 无法直接取详情正文。主站 www.sdrd.gov.cn 另载立法动态等静态栏目。"
+    },
+    {
+      "region": "河南",
+      "list_url": "https://www.henanrd.gov.cn/jyjd/",
+      "detail_url": "https://www.henanrd.gov.cn/2026-09-24/246366.html",
+      "publisher": "河南省人大常委会（河南人大网 henanrd.gov.cn）",
+      "access_status": "verified",
+      "notes": "河南人大网『决议决定』栏目（HTTP 200）列『关于修改/废止……地方性法规的决定』等；实测决议详情页 HTTP 200、正文约3.6千字符可提取。另有『地方立法』(/dflf/) 为立法动态栏目。页面另引用独立法规库入口 http://222.143.25.20:8090/index_lsm.jsp（IP 地址、本机实测超时未返回，列为候选待核）。"
+    },
+    {
+      "region": "湖北",
+      "list_url": "http://119.36.213.154:8088/fgk/index.jsp",
+      "detail_url": "http://119.36.213.154:8088/fgk/index_xq.jsp?Rileid=936",
+      "publisher": "湖北省人大常委会（湖北法规库）",
+      "access_status": "verified",
+      "notes": "湖北官网首页『湖北法规库』入口为 IP 站点 http://119.36.213.154:8088/fgk/index.jsp（HTTP 200）。列表分『地方性法规·法规性决定』『自治条例·单行条例』等；实测地方性法规详情页 index_xq.jsp?Rileid=936 HTTP 200、正文约6千字符。注意入口为 IP+端口而非域名，且部分 IP 端点响应缓慢/超时，需带较长超时。"
+    },
+    {
+      "region": "湖南",
+      "list_url": "https://www.hnrd.gov.cn/channel/16170.html",
+      "detail_url": "https://www.hnrd.gov.cn/content/646043/68/16314615.html",
+      "publisher": "湖南省人大常委会（湖南人大网 www.hnrd.gov.cn）",
+      "access_status": "verified",
+      "notes": "湖南人大网『法律法规库』栏目（HTTP 200）提供『省本级现行有效地方性法规目录』系列与单条法规；实测最新『现行有效地方性法规目录（236件）』详情页 HTTP 200、正文约8.4千字符（含146处条例名）。单条法规详情形如 /content/YYYY-MM-DD/NNNNN.html（部分早期链接 404，以现行目录为准）。"
+    }
+  ],
+  "summary": {
+    "fully_verified": ["上海", "江苏", "福建", "河南", "湖北", "湖南"],
+    "partial": ["浙江", "安徽", "江西", "山东"],
+    "partial_reasons": {
+      "浙江": "官方库为 JS 单页应用，详情经 XHR 动态加载，纯 HTTP 无法直接取正文",
+      "安徽": "省级数据库据官方报道仍试运行、未对社会公开，官网为 JS SPA，无静态法规链接",
+      "江西": "人大网为 jxrd.jxnews.com.cn，重要发布栏目可访问但公告详情多 302 跳转至 404，详情可用性不稳定",
+      "山东": "数据库为 JS 单页应用（后端 pkulaw 法制网），详情动态加载"
+    }
+  }
+}

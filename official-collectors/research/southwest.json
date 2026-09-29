@@ -1,0 +1,143 @@
+{
+  "meta": {
+    "task": "华南·西南·西北 省级官方法规库入口调研（只读，可核实候选清单）",
+    "generated_at": "2026-09-29",
+    "region_count": 13,
+    "method": "逐地区从省级人大/政府官网定位『省级法规规章规范性文件数据库』入口；用真实 HTTP 请求（curl/requests）验证入口可达性与标题，并用 headless Chromium（Playwright）实测一条原文详情能否取到正文。仅用官方域名，不绕过验证码，不使用第三方转载。",
+    "note": "13 个地区省级数据库全部已建成并上线（据青海人大 2024-03『全国31个省级法规规章规范性文件数据库全部建成上线』报道）。本区域 13 个库前端均为 JS 单页应用（全国统一的 npc-dp / pkulaw 法制网『法规规章规范性文件数据库』平台或各省自建同构 SPA），纯 HTTP 抓取入口 HTML 仅为壳（数百~数千字节），原文正文经 XHR/路由动态加载，无法用纯 HTTP 直接取到。因此按 east/north 既有口径，凡『入口 HTTP 200 但详情需 JS 渲染』一律标注 partial；凡已在浏览器中实测出完整正文的地区，在 notes 中单独注明『浏览器实测可取正文』，便于后续接入时用 headless 渲染或对接其数据接口。"
+  },
+  "regions": [
+    {
+      "region": "广东",
+      "list_url": "https://www.gdpc.gov.cn/bascdata/",
+      "detail_url": "https://www.gdpc.gov.cn/bascdata/securityJsp/nfrr_inner/internet/lawRule/lawRuleList.jsp?type=1",
+      "publisher": "广东省人大常委会（广东省法规规章规范性文件数据库，www.gdpc.gov.cn/bascdata）",
+      "access_status": "partial_入口HTTP200_详情JS渲染_列表AJAX加载",
+      "notes": "省级数据库入口 www.gdpc.gov.cn/bascdata/ 实测 200、标题『广东省法规规章规范性文件数据库』，分地方性法规/政府规章/规范性文件，并链接国家法律法规数据库、国务院政策文件库。列表页 lawRuleList.jsp?type=1（200，约41KB）行项由 AJAX 加载，纯 HTTP 无静态详情链接；详情需浏览器渲染。早期报道中的 basc.gdrd.cn 域名本机实测超时，已弃用，正确入口为 gdpc.gov.cn/bascdata。"
+    },
+    {
+      "region": "广西",
+      "list_url": "https://gxfgwjk.gxrd.gov.cn:8090/#/home",
+      "detail_url": "https://gxfgwjk.gxrd.gov.cn:8090/#/details/f24609fcb10fd611c191e1e7ad7557a9",
+      "publisher": "广西壮族自治区人大常委会（广西壮族自治区法规规章规范性文件数据库，gxfgwjk.gxrd.gov.cn:8090）",
+      "access_status": "partial_入口与详情浏览器实测200_详情JS渲染需渲染",
+      "notes": "入口实测 200、标题『广西壮族自治区法规规章规范性文件数据库』。列表路由 /#/localLaws?pidLevel=XM07（自治区地方性法规265件、设区的市297件等）。浏览器实测点击『广西壮族自治区人口和计划生育条例』在新标签打开 #/details/{id} 并渲染出完整正文（制定机关/公布日期/施行日期/全文『第一条…』），可取正文。纯 HTTP 仅返回 SPA 壳。"
+    },
+    {
+      "region": "海南",
+      "list_url": "https://wjk.hnftp.gov.cn/",
+      "detail_url": "https://wjk.hnftp.gov.cn/policy_detail.html?id=1595694531442921473",
+      "publisher": "海南省人大常委会（海南自由贸易港法规政策文件库，wjk.hnftp.gov.cn）",
+      "access_status": "partial_入口HTTP200_详情JS渲染需渲染",
+      "notes": "『海南自由贸易港法规政策文件库』入口 200、标题正确，分类法律/行政法规/部门规章/地方性法规/政府规章/政策文件（potency=1..6 参数，地方性法规 potency=4、自贸港法规 docNature=1611/1612）。详情路由 policy_detail.html?id={id}（实测 id 如 1595694531442921473，200 但为 SPA 壳，正文动态加载）。人大网另有『海南省地方性法规』栏目 www.hainanpc.gov.cn/hainanpc/28/lists/index.html（200，行项 AJAX 加载）。"
+    },
+    {
+      "region": "重庆",
+      "list_url": "https://fggs.cqrd.gov.cn/#/home",
+      "detail_url": "https://fggs.cqrd.gov.cn/#/home",
+      "publisher": "重庆市人大常委会（重庆市法规规章规范性文件数据库，fggs.cqrd.gov.cn）",
+      "access_status": "partial_入口浏览器实测200_详情同页JS渲染可取正文",
+      "notes": "入口 200、标题『重庆市法规规章规范性文件数据库』（2022-09 上线、2023-11 迭代，示范区建设）。浏览器实测点击『重庆市数据安全管理条例』（市六届人大常委会25次会议通过，2026-09-01 施行）在同页渲染出完整正文（第一章 总则 / 数据分类分级等），可取正文；详情为 SPA 同页路由（无独立 detail URL），纯 HTTP 入口仅返回 879B 壳。"
+    },
+    {
+      "region": "四川",
+      "list_url": "https://rhpt.scspc.gov.cn/flfgkgzd/",
+      "detail_url": "https://rhpt.scspc.gov.cn/flfgkgzd/local/1727893105627103232",
+      "publisher": "四川省人大常委会（四川省法规规章规范性文件数据库，rhpt.scspc.gov.cn/flfgkgzd）",
+      "access_status": "partial_入口HTTP200_详情Next.js客户端渲染",
+      "notes": "库入口为 scspc.gov.cn 主站的 rhpt.scspc.gov.cn/flfgkgzd/（Next.js 应用，实测 200、标题『四川省法规规章规范性文件数据库』，2024-01 上线），分类地方性法规/政府规章/人大·行政规范性文件/监委/法院/检察院。详情 /flfgkgzd/local/{id}（200，约17KB）SSR 仅含标题与『文件类型:』等字段，正文『四川省安全生产条例』条款由客户端渲染，纯 HTTP 取不到全文，需 headless 渲染或对接其数据接口。"
+    },
+    {
+      "region": "贵州",
+      "list_url": "https://gzfg.gzrd.gov.cn/home",
+      "detail_url": "https://gzfg.gzrd.gov.cn/details?id=2097347106162348033",
+      "publisher": "贵州省人大常委会（贵州省法规规章规范性文件数据库，gzfg.gzrd.gov.cn）",
+      "access_status": "partial_入口HTTP200_详情JS渲染需渲染",
+      "notes": "入口 200、标题『贵州省法规规章规范性文件数据库』，列省级/市州地方性法规（实测贵州省水路交通管理条例、赤水河流域酱香型白酒生产环境保护条例等，2026-07-29 公布）。详情路由 /details?id={id}（浏览器点击弹出新标签，200，渲染出制定机关/时效性/文件类型等结构化字段，但条款正文客户端加载）。纯 HTTP 该详情仅约9.9KB 壳。"
+    },
+    {
+      "region": "云南",
+      "list_url": "http://lf.ynrd.gov.cn/home",
+      "detail_url": "http://lf.ynrd.gov.cn/home",
+      "publisher": "云南省人大常委会（云南省法规规章规范性文件数据库，lf.ynrd.gov.cn）",
+      "access_status": "partial_入口HTTP200_详情JS渲染_列表经分类加载",
+      "notes": "『云南省法规规章规范性文件数据库』（lf.ynrd.gov.cn，首页 200、标题『法规规章规范性文件库』）为官方库入口，按地方性法规/政府规章/规范性文件及省、州、市分类检索（实测列出云南省公共图书馆条例、怒江州草果产业发展条例等）。详情同页渲染、无独立稳定 detail URL。注意：db.ynrd.gov.cn 为『代表工作业务系统』（需登录/短信验证码），非对外法规库，不要用作采集入口；xj.ynrd.gov.cn 为备案审查系统。"
+    },
+    {
+      "region": "西藏",
+      "list_url": "http://220.182.43.194:808/gfxwj/index.aspx",
+      "detail_url": "http://220.182.43.194:808/gfxwj/index.aspx",
+      "publisher": "西藏自治区人大常委会（西藏自治区法规规范性文件库）",
+      "access_status": "partial_入口HTTP200_列表经检索加载_详情未取得",
+      "notes": "库入口为 IP+端口站点 http://220.182.43.194:808/gfxwj/index.aspx（200、标题『西藏自治区法规规范性文件库』），分地方性法规/政府规章/各级人大决议决定/行政规范性/监察/法院/检察院。首页列表经检索接口动态加载，纯 HTTP 首页约2.9KB，浏览器未能在有限时间内稳定取到一条独立详情，故详情标注未取得。西藏人大网为 xizangrd.gov.cn（www.xzrd.gov.cn 实为江苏，勿混用）。"
+    },
+    {
+      "region": "陕西",
+      "list_url": "https://lfgl.sxrd.gov.cn:8013/web/#/home",
+      "detail_url": "https://lfgl.sxrd.gov.cn:8013/web/#/details/8636710dc5d23d8957eb441dc0d245e5",
+      "publisher": "陕西省人大常委会（陕西省法规规章规范性文件数据库，lfgl.sxrd.gov.cn:8013）",
+      "access_status": "partial_入口与详情浏览器实测200_详情JS渲染需渲染",
+      "notes": "库入口 lfgl.sxrd.gov.cn:8013/web/#/home 实测 200、标题『陕西省法规规章规范性文件数据库』（据报道入库 491 件地方性法规/215 件政府规章/2795 件规范性文件）。列表 /#/localLaws?pidLevel=XM07（共657篇）。浏览器实测点击『陕西省文物保护条例』在新标签打开 #/details/{id} 并渲染完整正文（2019-07-31 修正、2026-09-23 修订，PDF版/WPS版/网页版），可取正文。纯 HTTP 仅 SPA 壳。陕西人大网主站 www.sxrd.gov.cn 为 Vue SPA（788B）。"
+    },
+    {
+      "region": "甘肃",
+      "list_url": "https://cmutils.pkulaw.com/gsweb/#/home",
+      "detail_url": "https://cmutils.pkulaw.com/gsweb/#/details/0dd06dcef27b1ba2b198f757e1cb5f80",
+      "publisher": "甘肃省人大常委会（甘肃省法规规章规范性文件数据库，cmutils.pkulaw.com/gsweb）",
+      "access_status": "partial_入口与详情浏览器实测200_详情JS渲染需渲染",
+      "notes": "库入口实测 200、标题『甘肃省法规规章规范性文件数据库』（前端 Vue，后端 pkulaw 法制网 cmutils 服务，与山东同平台）。列表 /#/localLaws?pidLevel=XM07（地方性法规及法规性决定共621篇，省358件/市州245件）。浏览器实测点击『天水市渭河流域生态保护条例』在新标签打开 #/details/{id} 并渲染完整正文（2024-12-20 施行，历史版本 2026-08-14 修改等），可取正文。纯 HTTP 仅 SPA 壳。"
+    },
+    {
+      "region": "青海",
+      "list_url": "http://111.44.251.37:8005/",
+      "detail_url": "http://111.44.251.37:8005/Portal/FullInfo?ggId=55cb227d-6d5e-4b5e-a670-4feeed182",
+      "publisher": "青海省人大常委会（青海省法规规章规范性文件数据库 / 备案审查信息门户）",
+      "access_status": "partial_入口为IP端口_详情仅浏览器可取正文_纯HTTP500",
+      "notes": "库入口为 IP+端口站点 http://111.44.251.37:8005/（浏览器实测 200、首页标题『首页』，含『青海省各级人民代表大会常务委员会规范性文件备案审查条例』等，分地方性法规/政府规章/规范性文件及自治州分类）。qhrd.gov.cn/zhrd/basc/ 经 meta 刷新跳转到该 IP。详情 /Portal/FullInfo?ggId={uuid} 或 ?bbxmId={uuid}（如海南州物业管理办法修正），浏览器可渲染完整正文（第一章 总则 第一条…），但纯 HTTP 请求该详情返回 500（疑似会话/前端依赖），故标注仅浏览器可取正文。"
+    },
+    {
+      "region": "宁夏",
+      "list_url": "http://222.75.65.173:7088/basc/fgba/bascPortalManager.do?method=gotoFgbbList&fgxz=0302,0308",
+      "detail_url": "https://nxfgk.nxrd.gov.cn:8086/#/list",
+      "publisher": "宁夏回族自治区人大常委会（宁夏回族自治区法规规章规范性文件数据库）",
+      "access_status": "partial_地方性法规库入口为IP端口本机HTTP未响应_草案意见征集系统可访问",
+      "notes": "宁夏人大网 www.nxrd.gov.cn 首页引用的『地方性法规库』为 IP+端口 basc 门户 http://222.75.65.173:7088/basc/fgba/...（fgxz=0302,0308=地方性法规），本机纯 HTTP 实测连接超时/未响应，未能取到列表与详情，列为候选待进一步核实（或经宁夏本地网络访问）。nxfgk.nxrd.gov.cn:8086/#/list 实测 200，但其标题/内容为『法规草案意见征集系统』（列出草案征求意见），是立法征求意见前台而非现行法规全文库，不可作为原文采集入口。宁夏为 2021 年省级数据库建设示范区之一。"
+    },
+    {
+      "region": "新疆",
+      "list_url": "http://220.171.42.55:4965/home",
+      "detail_url": "http://220.171.42.55:4965/document-query?source=fileClass&title=%E8%87%AA%E6%B2%BB%E5%8C%BA%E8%87%AA%E6%B2%BB%E6%9D%A1%E4%BE%8B%E3%80%81%E5%8D%95%E8%A1%8C%E6%9D%A1%E4%BE%8B&menuIndex=3",
+      "publisher": "新疆维吾尔自治区人大常委会（新疆维吾尔自治区法规规章规范性文件库）",
+      "access_status": "partial_入口HTTP200_详情新标签JS渲染需渲染",
+      "notes": "库入口为 IP+端口站点 http://220.171.42.55:4965/home（200、标题『新疆维吾尔自治区法规规章规范性文件库』，据报道 2024-03-01 上线，共 4064 件：法规404、四级人大规范性文件260、政府规章208、四级政府行政规范性文件1988、兵团规范性文件1156 等）。列表为 SPA（xinjiang-public-address 应用，需 JS）；浏览器实测点击『自治条例和单行条例』类在新标签打开 document-query?source=fileClass&title=...&menuIndex=3 并渲染出文件类型分类与条目（自治区地方性法规293件等），可取正文。纯 HTTP 入口仅返回『需启用 JavaScript』壳。注意：www.xjpcsc.gov.cn 为重定向到内网 IP 的门户，非公网库入口。"
+    }
+  ],
+  "summary": {
+    "entry_reachable_13_of_13": true,
+    "detail_fulltext_confirmed_in_browser": ["广西", "重庆", "陕西", "甘肃"],
+    "detail_browser_fulltext_other": ["青海"],
+    "verified": [],
+    "partial": ["广东", "广西", "海南", "重庆", "四川", "贵州", "云南", "西藏", "陕西", "甘肃", "青海", "宁夏", "新疆"],
+    "partial_reasons": {
+      "共性": "13 个省级数据库前端均为 JS 单页应用（全国统一的 npc-dp / pkulaw 法制网平台或同构自建 SPA），纯 HTTP 仅返回壳页面，原文正文经 XHR/路由动态加载，无法用纯 HTTP 直接取到，故全部标注 partial。",
+      "广东": "入口 200，列表 AJAX 加载、详情需 JS 渲染",
+      "广西": "入口/详情均浏览器实测可取正文，但需 JS 渲染（新标签 #/details/{id}）",
+      "海南": "入口 200，详情 policy_detail.html?id={id} 为 SPA 壳，正文动态加载",
+      "重庆": "入口浏览器 200，详情同页 SPA 渲染可取正文（无独立 detail URL）",
+      "四川": "入口 200，Next.js 详情 /flfgkgzd/local/{id} 条款客户端渲染",
+      "贵州": "入口 200，详情 /details?id={id} 为 SPA 壳，条款正文客户端加载",
+      "云南": "入口 200，详情同页渲染；db.ynrd.gov.cn 为登录系统不可用",
+      "西藏": "入口 200，列表经检索加载，浏览器未稳定取到独立详情",
+      "陕西": "入口/详情均浏览器实测可取正文，但需 JS 渲染（新标签 #/details/{id}）",
+      "甘肃": "入口/详情均浏览器实测可取正文，但需 JS 渲染（新标签 #/details/{id}）",
+      "青海": "入口为 IP 端口 111.44.251.37:8005，详情 /Portal/FullInfo 纯 HTTP 500、仅浏览器可取正文",
+      "宁夏": "地方性法规库入口为 IP 端口 222.75.65.173:7088，本机纯 HTTP 未响应；nxfgk 为草案意见征集系统",
+      "新疆": "入口 200，详情 document-query 新标签 SPA 渲染，纯 HTTP 仅 JS 壳"
+    },
+    "next_steps_for_collector": [
+      "对这 13 个 SPA 库，采集器需 headless 渲染，或逆向各自的数据接口（pkulaw 平台为 getSyPage/getBackGroundPage 类接口；四川为 Next.js 数据接口；贵州/海南为 policy 接口）后按 detail id 取正文。",
+      "青海 / 宁夏 入口为裸 IP+端口，需带较长超时并在其网络可达环境验证。",
+      "广西 / 陕西 / 甘肃 详情已确认在新标签 #/details/{id} 可取全文，可作为首批接入对象（浏览器渲染即可）。"
+    ]
+  }
+}

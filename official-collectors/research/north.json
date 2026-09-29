@@ -1,0 +1,74 @@
+{
+  "task": "华北·东北 省级官方法规库入口调研（只读）",
+  "generated_at": "2026-09-29",
+  "scope_regions": ["北京", "天津", "河北", "山西", "内蒙古", "辽宁", "吉林", "黑龙江"],
+  "method": "逐地区从省级人大/政府官网定位省级法规规章规范性文件数据库入口；用真实 HTTP 请求验证首页/列表页，并尽量验证一条原文详情页。仅使用官方域名（人大或政府），不绕过验证码，不写库。SPA/需登录令牌/JS 渲染导致无法用纯 HTTP 取到详情页的地区如实标注。",
+  "verified_count_home_and_detail": 3,
+  "note_on_verified_count": "『首页+原文详情页均经纯 HTTP 实测可达』的地区数为 3：北京、吉林、山西。其余 5 地区首页/入口可达，但详情页由 JS/令牌/SSL 限制，未能用纯 HTTP 直接取到原文，列为候选待接入。",
+  "regions": [
+    {
+      "region": "北京",
+      "list_url": "https://www.bjrd.gov.cn/rdzl/dfxfgk/dfxfg/",
+      "detail_url": "https://www.bjrd.gov.cn/rdzl/dfxfgk/dfxfg/202609/t20260913_4861613.html",
+      "publisher": "北京市人民代表大会常务委员会（bjrd.gov.cn）",
+      "access_status": "可用_首页与详情页均HTTP实测200",
+      "notes": "北京市人大『地方性法规库』，纯 HTML 静态列表，首页 200（约14KB）含大量法规链接；实测详情页 200、正文约18.5KB，标题『北京市无人驾驶航空器管理规定_地方性法规_北京市人民代表大会常务委员会』。列表页 /rdzl/dfxfgk/ 重定向到 /rdzl/dfxfgk/dfxfg/。2023-12 建成并覆盖市/区/乡镇及人大/政府/监察委/法院/检察院。"
+    },
+    {
+      "region": "吉林",
+      "list_url": "http://www.jlrd.gov.cn/jlsjk/fgklb/?wjlx=5,6",
+      "detail_url": "http://www.jlrd.gov.cn/jlsjk/202601/t20260115_9397450.html",
+      "publisher": "吉林省人民代表大会常务委员会（jlrd.gov.cn）",
+      "access_status": "可用_列表页与详情页均HTTP实测200（列表走WAS检索API）",
+      "notes": "『吉林省法规规章规范性文件数据库』(/jlsjk/)。列表为 WAS 检索 API（was.jl.gov.cn/was5/web/gov/renda/response_renda_guizhangku20230807.jsp?wjlx=5,6 等），实测 200 返回含 puburl 的 JSON；按 puburl 实测详情页 200、正文约43KB（吉林省人民政府令第286号等）。wjlx=5,6=地方性法规/政府规章类，1,2,3,4 与 7-11 为其它分类。"
+    },
+    {
+      "region": "山西",
+      "list_url": "https://fgsjk.sxpc.gov.cn/prod-api/extranet/regulation/search",
+      "detail_url": "https://fgsjk.sxpc.gov.cn/prod-api/extranet/regulation/getById/716e94dba51468fa6554c9cc777b80c7",
+      "publisher": "山西省人民代表大会（fgsjk.sxpc.gov.cn，省人大法规库）",
+      "access_status": "可用_首页与详情API均HTTP实测200（列表/详情走JSON API）",
+      "notes": "山西省法规规章规范性文件数据库（fgsjk.sxpc.gov.cn，前端 Vue SPA，首页 200 约4.3KB）。列表 API = POST /prod-api/extranet/regulation/search（body 如 {\"page\":1,\"pageSize\":10}），实测 200 返回 total=4716 条，行内含完整正文 content；详情 = GET/POST /prod-api/extranet/regulation/getById/{id}，实测 200『查询法规详情成功』返回原文。分类配置见 /prod-api/extranet/config/filetype 等。注意：山西『省级政策文件库』(shanxi.gov.cn/zcwjk) 为另一入口，含地方性法规/规章/规范性文件栏目。"
+    },
+    {
+      "region": "天津",
+      "list_url": "https://www.tj.gov.cn/zwgk/zcwjk/",
+      "detail_url": null,
+      "publisher": "天津市人民政府（www.tj.gov.cn 政策文件库）",
+      "access_status": "候选_首页HTTP实测200_详情页经JS检索未取得",
+      "notes": "天津市政府『政策文件库』(/zwgk/zcwjk/)，首页 200、正文约129KB，含地方性法规/规章/行政规范性文件栏目，并有地方性法规专题子页 index_22280.html?termId=23450。列表结果由前端 JS 检索（/igs/front/search/...）动态加载，纯 HTTP 请求该接口未命中（需检索 code 参数），未能用纯 HTTP 直接取到一条原文详情页，故列为候选待接入。"
+    },
+    {
+      "region": "河北",
+      "list_url": "http://fgwj.hbrd.gov.cn:8086/",
+      "detail_url": null,
+      "publisher": "河北省人民代表大会常务委员会（hbrd.gov.cn）",
+      "access_status": "候选_官网首页与数据库首页均HTTP实测200_详情页经令牌/JS未取得",
+      "notes": "河北省人大官网(www.hbrd.gov.cn)首页 200 约72KB，正文含『法规/规范性文件/规章』，法规工作栏目 /lfgz/。省级数据库入口为独立 SPA：http://fgwj.hbrd.gov.cn:8086/#/home（首页 200，含 /localLaws /regulations /normative 等路由，app.js 已取回）。该 SPA 数据接口需令牌/前端拼装，纯 HTTP 未取到一条原文详情页，故列为候选待接入。"
+    },
+    {
+      "region": "内蒙古",
+      "list_url": "https://sjk.nmgrd.gov.cn:8081/nm-home/",
+      "detail_url": null,
+      "publisher": "内蒙古自治区人民代表大会（sjk.nmgrd.gov.cn）",
+      "access_status": "候选_数据库首页HTTP实测200_详情页经令牌/SSL限制未取得",
+      "notes": "『内蒙古自治区法规规章规范性文件数据库』，首页 https://sjk.nmgrd.gov.cn:8081/nm-home/ 实测 200（SPA，约3.2KB，noscript 标 npc-dp）。前端取 baseUrl.js：数据 API 基址 https://sjk.nmgrd.gov.cn:8081/nmapis（如 /api/search/main、/api/law/dataTopic/list）。该 :8081 端点证书需放宽校验、且接口需登录令牌，纯标准 HTTP 未能直接取到一条原文详情页，故列为候选待接入。"
+    },
+    {
+      "region": "辽宁",
+      "list_url": "http://www.lnrd.gov.cn/lnrd/zyfb/dfxfg/index.shtml",
+      "detail_url": null,
+      "publisher": "辽宁省人民代表大会常务委员会（lnrd.gov.cn）",
+      "access_status": "候选_法规栏目页HTTP实测200_列表与详情经JS/AJAX未取得",
+      "notes": "辽宁省人大官网，『地方性法规』栏目 /lnrd/zyfb/dfxfg/index.shtml 实测 200（约76KB，标题『地方性法规-辽宁省人民代表大会常务委员会』）；另有政府规章 /lnrd/zyfb/gzyd/。该栏目列表由前端 queryArticleByCondition 调 /lnrd/zyfb/dfxfg/258434cd-N.shtml 等 AJAX 动态填充，纯 HTML 无静态原文详情链接，纯 HTTP 未取到一条原文详情页，故列为候选待接入。一体化立法平台入口 lnszrd.lnrd.gov.cn:180（证书需放宽校验）。"
+    },
+    {
+      "region": "黑龙江",
+      "list_url": "https://fgk.hljrd.gov.cn/",
+      "detail_url": null,
+      "publisher": "黑龙江省人民代表大会（fgk.hljrd.gov.cn）",
+      "access_status": "候选_数据库首页HTTP实测200_详情页经令牌未取得",
+      "notes": "『黑龙江省法规规章规范性文件数据库』fgk.hljrd.gov.cn 首页实测 200（SPA，约3.5KB，Vue，noscript 提示需启用 JS）。app.js 含详情接口 /archives/normativeDocuments/ignoreLoginGetById/，但列表接口 /api/archives/normativeDocuments/page 实测返回『令牌不能为空』，需登录令牌，纯 HTTP 未取到一条原文详情页，故列为候选待接入。含地方性法规/人大决议决定/政府规章/行政规范性文件/监委/法院/检察院等分类。"
+    }
+  ]
+}

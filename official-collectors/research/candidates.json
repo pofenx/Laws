@@ -1,0 +1,15 @@
+[
+  {"region":"广东","list_url":"http://basc.gdrd.cn","publisher":"广东省人大常委会（广东省地方性法规数据库，广东人大网）"},
+  {"region":"广西","list_url":"http://www.gxrd.gov.cn","publisher":"广西壮族自治区人大常委会（广西人大网）"},
+  {"region":"海南","list_url":"http://hainanpc.gov.cn","publisher":"海南省人大常委会（海南人大网）"},
+  {"region":"重庆","list_url":"http://www.cqrd.gov.cn","publisher":"重庆市人大常委会（重庆人大网）"},
+  {"region":"四川","list_url":"http://www.scspc.gov.cn","publisher":"四川省人大常委会（四川人大网）"},
+  {"region":"贵州","list_url":"http://www.gzrd.gov.cn","publisher":"贵州省人大常委会（贵州人大网）"},
+  {"region":"云南","list_url":"http://www.ynrd.gov.cn","publisher":"云南省人大常委会（云南人大网）"},
+  {"region":"西藏","list_url":"http://www.xzrd.gov.cn","publisher":"西藏自治区人大常委会（西藏人大网）"},
+  {"region":"陕西","list_url":"http://www.sxrd.gov.cn","publisher":"陕西省人大常委会（陕西人大网）"},
+  {"region":"甘肃","list_url":"http://www.gsrdw.gov.cn","publisher":"甘肃省人大常委会（甘肃人大网）"},
+  {"region":"青海","list_url":"http://www.qhrd.gov.cn","publisher":"青海省人大常委会（青海人大网）"},
+  {"region":"宁夏","list_url":"http://www.nxrd.gov.cn","publisher":"宁夏回族自治区人大常委会（宁夏人大网）"},
+  {"region":"新疆","list_url":"http://www.xjrd.gov.cn","publisher":"新疆维吾尔自治区人大常委会（新疆人大网）"}
+]

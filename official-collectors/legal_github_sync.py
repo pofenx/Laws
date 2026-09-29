@@ -80,7 +80,9 @@ def export():
         t = (d.get('title') or f"doc{d['id']}").strip()
         ct = re.sub(r'[（(]\d{4}[)）]\s*$', '', t).strip()
         dpub = (d.get('publication_date') or '').replace('.', '-').replace('/', '-').strip() or None
-        safe = re.sub(r'[\\/:*?"<>|\r\n\t]', '_', ct)[:100]
+        safe = re.sub(r'[\\/:*?"<>|\r\n\t]', '_', ct)
+        while len(safe.encode('utf-8')) > 200:  # 文件名≤255字节(中文3字节/字),留日期与扩展名余量
+            safe = safe[:-1]
         fn = f'{safe}({dpub}).md' if dpub else f'{safe}.md'
         td = '行政法规' if j == '全国' else f'DLC/{j}地方法规/地方性法规/{j}'
         if td.startswith('DLC') and fn in up_files:

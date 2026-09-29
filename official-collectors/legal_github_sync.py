@@ -105,8 +105,10 @@ def export():
     # 采集器+调研
     coll = EXPORT / 'official-collectors'
     coll.mkdir(exist_ok=True)
-    for s in ['sync.py', 'official_gov.py', 'official_shanghai.py', 'official_zhejiang.py',
-              'official_beijing.py', 'official_jiangsu.py', 'legal_github_sync.py', 'status.py']:
+    for s in ['sync.py', 'official_gov.py', 'official_shanghai.py', 'official_shanghai_rd.py', 'official_zhejiang.py',
+              'official_beijing.py', 'official_jiangsu.py', 'official_shandong.py', 'official_hunan.py',
+              'official_hubei.py', 'official_yunnan.py', 'official_xinjiang.py',
+              'legal_github_sync.py', 'status.py']:
         f = LC / s
         if f.exists():
             (coll / s).write_bytes(f.read_bytes())

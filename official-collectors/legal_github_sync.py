@@ -37,7 +37,7 @@ def get_token():
 TOK = get_token()
 
 
-def api(path, method='GET', body=None, timeout=60, retries=3):
+def api(path, method='GET', body=None, timeout=60, retries=5):
     for a in range(retries):
         req = urllib.request.Request(API + path, method=method,
                                      data=json.dumps(body).encode() if body is not None else None,
@@ -50,9 +50,10 @@ def api(path, method='GET', body=None, timeout=60, retries=3):
         except urllib.error.HTTPError as e:
             return e.code, e.read().decode(errors='replace')[:300]
         except Exception:
+            # 网络/大读取(IncompleteRead)抖动：指数退避重试，避免单次抖动中断每日任务
             if a == retries - 1:
                 raise
-            time.sleep(4)
+            time.sleep(3 * (a + 1))
 
 
 def blob_sha(content: bytes) -> str:

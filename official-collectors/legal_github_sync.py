@@ -107,7 +107,8 @@ def export():
     coll.mkdir(exist_ok=True)
     for s in ['sync.py', 'official_gov.py', 'official_shanghai.py', 'official_shanghai_rd.py', 'official_zhejiang.py',
               'official_beijing.py', 'official_jiangsu.py', 'official_shandong.py', 'official_hunan.py',
-              'official_hubei.py', 'official_yunnan.py', 'official_xinjiang.py',
+              'official_hubei.py', 'official_yunnan.py', 'official_yunnan_pdf.py', 'official_xinjiang.py',
+              'official_guangdong.py', 'official_fujian.py',
               'legal_github_sync.py', 'status.py']:
         f = LC / s
         if f.exists():

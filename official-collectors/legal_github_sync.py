@@ -14,6 +14,10 @@ EXPORT = LC / 'export_official'
 LIMIT_FILES = 400
 DATA_PREFIX = 'DLC/'
 COLL_PREFIX = 'official-collectors/'
+NATIONAL_PREFIX = '行政法规/'
+# 导出会写到的全部目录前缀（全国→行政法规/，省市→DLC/，采集器→official-collectors/）。
+# existing 必须覆盖这所有前缀，否则未被跟踪的路径每次都被当作"变更"，产生空提交、非幂等。
+EXPORT_PREFIXES = (NATIONAL_PREFIX, DATA_PREFIX, COLL_PREFIX)
 
 TOKEN_PAT = re.compile(r'(ghp_[A-Za-z0-9]{20,}|github_pat_[A-Za-z0-9_]{20,})')
 
@@ -141,7 +145,7 @@ def main():
         print(json.dumps({'status': 'error', 'stage': 'get-tree', 'http': s, 'body': str(tree)[:200]}))
         sys.exit(1)
     existing = {t['path']: t['sha'] for t in tree.get('tree', []) if t['type'] == 'blob'
-                and (t['path'].startswith(DATA_PREFIX) or t['path'].startswith(COLL_PREFIX) or t['path'] == 'README.md')}
+                and (t['path'].startswith(EXPORT_PREFIXES) or t['path'] == 'README.md')}
 
     wanted = {}
     for f in EXPORT.rglob('*'):
